@@ -1,3 +1,6 @@
+const { EthersEvent } = require("alchemy-sdk/dist/src/internal/ethers-event");
+const { ethers } = require("hardhat");
+
 async function main() {
 
   const [deployer] = await ethers.getSigners();
@@ -6,7 +9,8 @@ async function main() {
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
   // deploy contracts here:
-  
+  const NFT = await ethers.getContractFactory("NFT");
+  const nft = await NFT.deploy(); 
   
   // For each contract, pass the deployed contract and name to this function to save a copy of the contract ABI and address to the front end.
   saveFrontendFiles();
