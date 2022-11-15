@@ -20,6 +20,15 @@ contract Marketplace is ReentrancyGuard {
         bool sold;
     }
 
+    // Create event w all info for cheap storage
+    event Offered (
+        uint itemId,
+        address indexed nft, 
+        uint tokenId,
+        uint price,
+        address indexed seller
+    ) // indexed means that we can search like w filters
+
     // mapping is key->value like itemId -> Item
     mapping(uint => Item) public items ;
     constructor(uint _feePercent) {
@@ -41,6 +50,13 @@ contract Marketplace is ReentrancyGuard {
             payable(msg.sender),
             false
         );
-
+        // emit Offered event
+        emit Offered (
+            itemCount,
+            address(_nft),
+            _tokenId,
+            _price,
+            msg.sender
+        )
     }
 }
